@@ -167,7 +167,6 @@ class HomeActivity : ComponentActivity() {
 
             }
 
-
         }
     }
 }
