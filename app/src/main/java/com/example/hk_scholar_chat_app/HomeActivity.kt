@@ -68,8 +68,8 @@ class HomeActivity : ComponentActivity() {
 
         // 3 - Authenticate and connect the user
         val user = User(
-            id = "Ken22",
-            name = "Ken22",
+            id = "tutorial-droid",
+            name = "Tutorial Droid",
             image = "https://bit.ly/2TIt8NR"
         )
         client.connectUser(
@@ -78,14 +78,17 @@ class HomeActivity : ComponentActivity() {
             // PAANO KUMUHA NG TOKEN
             // https://getstream.io/chat/docs/php/token_generator/
             // secret: b243swcntu8db56swfvx3cnqp4pkje9cqpkwmw29hcp6b232egw2n3bp5yg22k4x
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiS2VuMjIifQ.T7ZSz0dRDdosXz0HR49V3GswsRY8B4OgHpX0q3-ZCZU"
+            // tutorial-droid token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.WwfBzU1GZr0brt_fXnqKdKhz3oj0rbDUm2DqJO_SS5U
+            // Ken22 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiS2VuMjIifQ.T7ZSz0dRDdosXz0HR49V3GswsRY8B4OgHpX0q3-ZCZU
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.WwfBzU1GZr0brt_fXnqKdKhz3oj0rbDUm2DqJO_SS5U"
         ).enqueue() { result ->
 
             if (result.isSuccess) {
                 // TODO: Handle success LATER NA TO
             } else {
                 // TODO: Handle error LATER NA TO
-                println("Failed to connect user: ${result.getOrThrow() ?: "Unknown error"}")
+                val error = result.errorOrNull()
+                println("Failed to connect user: ${error?.message ?: "Unknown error"}")
             }
 
             /**
