@@ -61,6 +61,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
+
     //dito navigation
     implementation(libs.navigation.compose)
 
