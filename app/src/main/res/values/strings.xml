@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">hk-scholar-chat-app</string>
+    <string name="api_key">wfh4gnkzchkj</string>
+
 </resources>
