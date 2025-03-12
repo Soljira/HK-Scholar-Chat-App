@@ -4,8 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,8 +18,10 @@ import androidx.compose.runtime.collectAsState
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.hk_scholar_chat_app.ui.theme.HkscholarchatappTheme
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.logger.ChatLogLevel
@@ -35,13 +42,10 @@ import java.util.UUID
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
+        enableEdgeToEdge()
         // 1 - Set up the OfflinePlugin for offline storage
-        val offlinePluginFactory = StreamOfflinePluginFactory(
-            appContext = applicationContext
-        )
-        val statePluginFactory =
-            StreamStatePluginFactory(config = StatePluginConfig(), appContext = this)
+        val offlinePluginFactory = StreamOfflinePluginFactory(appContext = applicationContext)
+        val statePluginFactory = StreamStatePluginFactory(config = StatePluginConfig(), appContext = this)
 
         // 2 - Set up the client for API calls and with the plugin for offline storage
         // eto ung api key talaga natin. wala pang laman
@@ -78,39 +82,49 @@ class HomeActivity : ComponentActivity() {
                 println("Failed to connect user: ${result.getOrThrow() ?: "Unknown error"}")
             }
 
-            setContent {
-                // Observe the client connection state
-                val clientInitialisationState by client.clientState.initializationState.collectAsState()
+        setContent {
+            val context = LocalContext.current
+            val clientInitialisationState by client.clientState.initializationState.collectAsState()
 
-                ChatTheme {
-                    when (clientInitialisationState) {
-                        InitializationState.COMPLETE -> {
-                            ChannelsScreen(
-                                title = stringResource(id = R.string.app_name),
-                                isShowingHeader = true,
-                                onChannelClick = { channel ->
-                                    startActivity(ChannelActivity.getIntent(this, channel.cid))
-                                },
-                                onHeaderActionClick = {
-                                    println("Header Action Click")
-
-                                },
-                                onBackPressed = { finish() }
+            ChatTheme {
+                Scaffold(
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                ) { paddingValues ->
+                    Column(
+                        modifier = Modifier.padding(
+                            PaddingValues(
+                                top = paddingValues.calculateTopPadding(),
+                                start = 0.dp,
+                                end = 0.dp,
+                                bottom = 0.dp
                             )
-                        }
+                        )
+                    ) {
+                        when (clientInitialisationState) {
+                            InitializationState.COMPLETE -> {
+                                ChannelsScreen(
+                                    title = stringResource(id = R.string.app_name),
+                                    isShowingHeader = true,
+                                    onChannelClick = { channel ->
+                                        startActivity(ChannelActivity.getIntent(context, channel.cid))
+                                    },
+                                    onHeaderActionClick = {
+                                        println("Header Action Click")
 
-                        InitializationState.INITIALIZING -> {
-                            androidx.compose.material.Text(text = "Initialising...")
-                        }
-
-                        InitializationState.NOT_INITIALIZED -> {
-                            androidx.compose.material.Text(text = "Not initialized...")
+                                    },
+                                    onBackPressed = { finish() }
+                                )
+                            }
+                            InitializationState.INITIALIZING -> {
+                                androidx.compose.material.Text(text = "Initialising...")
+                            }
+                            InitializationState.NOT_INITIALIZED -> {
+                                androidx.compose.material.Text(text = "Not initialized...")
+                            }
                         }
                     }
                 }
             }
-
         }
-    }
 
 }
