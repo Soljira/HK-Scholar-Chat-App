@@ -45,17 +45,17 @@ class HomeActivity : ComponentActivity() {
 
         // 2 - Set up the client for API calls and with the plugin for offline storage
         // eto ung api key talaga natin. wala pang laman
-        val client = ChatClient.Builder(getString(R.string.api_key), applicationContext)
-            .withPlugins(offlinePluginFactory, statePluginFactory)
-            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
-            .build()
-
-        // eto ung sample api key from https://getstream.io/tutorials/android-chat/
-        // uncomment this and icomment ung nasa taas para matest nyo
-//        val client = ChatClient.Builder("uun7ywwamhs9", applicationContext)
+//        val client = ChatClient.Builder(getString(R.string.api_key), applicationContext)
 //            .withPlugins(offlinePluginFactory, statePluginFactory)
 //            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
 //            .build()
+
+        // eto ung sample api key from https://getstream.io/tutorials/android-chat/
+        // uncomment this and icomment ung nasa taas para matest nyo
+        val client = ChatClient.Builder("uun7ywwamhs9", applicationContext)
+            .withPlugins(offlinePluginFactory, statePluginFactory)
+            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
+            .build()
 
         // 3 - Authenticate and connect the user
         val user = User(
@@ -93,22 +93,7 @@ class HomeActivity : ComponentActivity() {
                                 },
                                 onHeaderActionClick = {
                                     println("Header Action Click")
-                                    // Create a new channel when header action is clicked
-                                    val randomId = UUID.randomUUID().toString().substring(0, 8)
-                                    val channelClient = client.channel(channelType = "messaging", channelId = randomId)
-                                    val extraData = mutableMapOf(
-                                        "name" to "New Channel ${randomId}"
-                                    )
 
-                                    channelClient.create(memberIds = emptyList(), extraData = extraData).enqueue { channelResult ->
-                                        if (channelResult.isSuccess) {
-                                            val channel: Channel = channelResult.getOrThrow()
-                                            println("Successfully created channel: ${channel.cid}")
-                                            // startActivity(ChannelActivity.getIntent(this, channel.cid))
-                                        } else {
-                                            println("Failed to create channel: ${channelResult.errorOrNull()?.message ?: "Unknown error"}")
-                                        }
-                                    }
                                 },
                                 onBackPressed = { finish() }
                             )
