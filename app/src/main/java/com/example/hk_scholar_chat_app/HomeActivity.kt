@@ -49,8 +49,8 @@ class HomeActivity : ComponentActivity() {
 
         // 3 - Authenticate and connect the user
         val user = User(
-            id = "tutorial-droid",
-            name = "Tutorial Droid",
+            id = "xXxj34n0g3nu1n0xXx",
+            name = "Jeano Genuino",
             image = "https://bit.ly/2TIt8NR"
         )
         client.connectUser(
