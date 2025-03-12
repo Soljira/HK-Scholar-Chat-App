@@ -75,7 +75,10 @@ class HomeActivity : ComponentActivity() {
         client.connectUser(
             user = user,
             // TODO: change this hardcoded token to something else later
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.WwfBzU1GZr0brt_fXnqKdKhz3oj0rbDUm2DqJO_SS5U"
+            // PAANO KUMUHA NG TOKEN
+            // https://getstream.io/chat/docs/php/token_generator/
+            // secret: b243swcntu8db56swfvx3cnqp4pkje9cqpkwmw29hcp6b232egw2n3bp5yg22k4x
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiS2VuMjIifQ.T7ZSz0dRDdosXz0HR49V3GswsRY8B4OgHpX0q3-ZCZU"
         ).enqueue() { result ->
 
             if (result.isSuccess) {
@@ -104,28 +107,9 @@ class HomeActivity : ComponentActivity() {
                 }
             }
 
-
-            // Watching a channel's state using the offline library
-//            scope.launch {
-//                client.watchChannelAsState(cid = "messaging:travel", messageLimit = 0).collect { channelState ->
-//                    if (channelState != null) {
-//                        // StateFlow objects to observe
-//                        channelState.messages
-//                        channelState.reads
-//                        channelState.typing
-//                    } else {
-//                        // User not connected yet.
-//                    }
-//                }
-//            }
-            // Watching a channel's state using the offline library
-            val channelStateFlow = client.watchChannelAsState(cid = "messaging:travel", messageLimit = 0)
-
             setContent {
                 val context = LocalContext.current
                 val clientInitialisationState by client.clientState.initializationState.collectAsState()
-
-                val channelState by channelStateFlow.collectAsState() // Collect the channel state here
 
 
                 ChatTheme {
@@ -157,23 +141,21 @@ class HomeActivity : ComponentActivity() {
                                         },
                                         onHeaderActionClick = {
                                             println("Header Action Click")
+                                            // NOTE: This will create a new channel
+//                                            val channelClient = client.channel(channelType = "messaging", channelId = "kenTest")
+//
+//                                            channelClient.create(memberIds = emptyList(), extraData = emptyMap()).enqueue { result ->
+//                                                if (result.isSuccess) {
+//                                                    val newChannel: Channel = result.getOrThrow()
+//                                                } else {
+//                                                    // Handle result.error()
+//                                                }
+//                                            }
 
                                         },
                                         onBackPressed = { finish() }
                                     )
 
-                                    // Collect and display channel state data in the UI
-                                    if (channelState != null) {
-                                        val messages by channelState!!.messages.collectAsState()
-                                        val reads by channelState!!.reads.collectAsState()
-                                        val typing by channelState!!.typing.collectAsState()
-
-                                        Text(text = "Messages: ${messages.size}")
-                                        Text(text = "Reads: ${reads.size}")
-//                                        Text(text = "Typing: ${typing.size}")
-                                    } else {
-                                        Text(text = "Channel not connected yet.")
-                                    }
                                 }
 
 
