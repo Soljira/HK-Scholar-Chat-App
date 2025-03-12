@@ -68,8 +68,8 @@ class HomeActivity : ComponentActivity() {
 
         // 3 - Authenticate and connect the user
         val user = User(
-            id = "tutorial-droid",
-            name = "Tutorial Droid",
+            id = "soljira",
+            name = "Soljira",
             image = "https://bit.ly/2TIt8NR"
         )
         client.connectUser(
@@ -80,7 +80,7 @@ class HomeActivity : ComponentActivity() {
             // secret: b243swcntu8db56swfvx3cnqp4pkje9cqpkwmw29hcp6b232egw2n3bp5yg22k4x
             // tutorial-droid token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.WwfBzU1GZr0brt_fXnqKdKhz3oj0rbDUm2DqJO_SS5U
             // Ken22 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiS2VuMjIifQ.T7ZSz0dRDdosXz0HR49V3GswsRY8B4OgHpX0q3-ZCZU
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.WwfBzU1GZr0brt_fXnqKdKhz3oj0rbDUm2DqJO_SS5U"
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic29samlyYSJ9.PxAp-TrYAiAyaweWLvm--6ys-bdI6ubAOlmcXD3fHaI"
         ).enqueue() { result ->
 
             if (result.isSuccess) {
@@ -98,17 +98,6 @@ class HomeActivity : ComponentActivity() {
             val extraData = mutableMapOf<String, Any>(
                 "name" to "Awesome channel about traveling"
             )
-
-            // Creating a channel with the low level client
-            channelClient.create(memberIds = emptyList(), extraData = extraData).enqueue { result ->
-                if (result.isSuccess) {
-                    val channel: Channel = result.getOrThrow()
-                    println("channel creation success")
-                    // Use channel by calling methods on channelClient
-                } else {
-                    // Handle result.error()
-                }
-            }
 
             setContent {
                 val context = LocalContext.current
