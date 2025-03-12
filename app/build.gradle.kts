@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -36,6 +37,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -57,12 +59,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
     /* Firebase stuff */
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))  // Import the Firebase BoM (Bill of Materials)
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
+
+    /* StreamChat SDK stuff */
+//    implementation("io.getstream:stream-chat-android-client:$stream_version")
+//    implementation "io.getstream:stream-chat-android-compose:$stream_version"
+    implementation(libs.stream.chat.android.client)
+
+
 
 
 }
