@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">hk-scholar-chat-app</string>
+    <string name="app_name">HK Scholar Chat</string>
     <string name="api_key">wfh4gnkzchkj</string>
+    <string name="title_activity_channel">ChannelActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
 
 </resources>

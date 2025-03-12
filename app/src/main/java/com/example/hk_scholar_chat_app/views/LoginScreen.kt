@@ -1,5 +1,6 @@
 package com.example.hk_scholar_chat_app.views
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,12 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.hk_scholar_chat_app.HomeActivity
 import com.example.hk_scholar_chat_app.ui.theme.HkscholarchatappTheme
 
 @Composable
@@ -95,6 +98,8 @@ fun SigninButton(onClick:() -> Unit) {
 fun CardForLogin(username:String, password:String, onUsernameChange:(String)->Unit, onPasswordChange:(String)->Unit){
     var isPasswordVisible by remember { mutableStateOf(false) }
     var icon = if (isPasswordVisible) painterResource(id = R.drawable.open_eye) else painterResource(id = R.drawable.close_eye)
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .padding(15.dp)
@@ -151,7 +156,7 @@ fun CardForLogin(username:String, password:String, onUsernameChange:(String)->Un
             )
             SigninButton(
                 onClick = {
-
+                    context.startActivity(Intent(context, HomeActivity::class.java))
                 }
             )
             ForgotPassword(

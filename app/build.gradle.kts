@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
+//    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -61,6 +63,17 @@ dependencies {
 
     //dito navigation
     implementation(libs.navigation.compose)
+
+    /* Compose stuff */
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.activity:activity-compose:1.3.1")
+
 
     /* Firebase stuff */
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))  // Import the Firebase BoM (Bill of Materials)
