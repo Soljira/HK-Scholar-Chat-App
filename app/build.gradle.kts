@@ -59,6 +59,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //dito navigation
+    implementation(libs.navigation.compose)
+
     /* Firebase stuff */
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))  // Import the Firebase BoM (Bill of Materials)
     implementation("com.google.firebase:firebase-auth-ktx")
