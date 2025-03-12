@@ -67,9 +67,9 @@ dependencies {
 
     /* StreamChat SDK stuff */
 //    implementation("io.getstream:stream-chat-android-client:$stream_version")
-//    implementation "io.getstream:stream-chat-android-compose:$stream_version"
-    implementation(libs.stream.chat.android.client)
-
+//    implementation(libs.stream.chat.android.client)
+//    implementation(libs.stream.chat.android.compose)
+    implementation("io.getstream:stream-chat-android-compose:6.12.0")
 
 
 
