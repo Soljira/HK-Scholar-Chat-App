@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
+//    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -59,6 +61,17 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    /* Compose stuff */
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.activity:activity-compose:1.3.1")
+
+
     /* Firebase stuff */
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))  // Import the Firebase BoM (Bill of Materials)
     implementation("com.google.firebase:firebase-auth-ktx")
@@ -69,7 +82,13 @@ dependencies {
 //    implementation("io.getstream:stream-chat-android-client:$stream_version")
 //    implementation(libs.stream.chat.android.client)
 //    implementation(libs.stream.chat.android.compose)
-    implementation("io.getstream:stream-chat-android-compose:6.12.0")
+//    implementation("io.getstream:stream-chat-android-compose:6.12.0")
+    val streamChat = "6.12.0"
+    implementation("io.getstream:stream-chat-android-offline:$streamChat")
+    implementation("io.getstream:stream-chat-android-compose:$streamChat")
+
+    implementation("androidx.compose.material:material-icons-extended:1.6.0-alpha08")
+
 
 
 
