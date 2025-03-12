@@ -61,6 +61,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //dito navigation
+    implementation(libs.navigation.compose)
+
     /* Compose stuff */
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
@@ -82,13 +85,7 @@ dependencies {
 //    implementation("io.getstream:stream-chat-android-client:$stream_version")
 //    implementation(libs.stream.chat.android.client)
 //    implementation(libs.stream.chat.android.compose)
-//    implementation("io.getstream:stream-chat-android-compose:6.12.0")
-    val streamChat = "6.12.0"
-    implementation("io.getstream:stream-chat-android-offline:$streamChat")
-    implementation("io.getstream:stream-chat-android-compose:$streamChat")
-
-    implementation("androidx.compose.material:material-icons-extended:1.6.0-alpha08")
-
+    implementation("io.getstream:stream-chat-android-compose:6.12.0")
 
 
 
