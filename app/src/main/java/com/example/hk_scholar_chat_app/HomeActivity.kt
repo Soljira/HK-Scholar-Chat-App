@@ -35,22 +35,22 @@ class HomeActivity : ComponentActivity() {
 
         // 2 - Set up the client for API calls and with the plugin for offline storage
         // eto ung api key talaga natin. wala pang laman
-        val client = ChatClient.Builder(getString(R.string.api_key), applicationContext)
-            .withPlugins(offlinePluginFactory, statePluginFactory)
-            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
-            .build()
-
-        // eto ung sample api key from https://getstream.io/tutorials/android-chat/
-        // uncomment this and icomment ung nasa taas para matest nyo
-//        val client = ChatClient.Builder("uun7ywwamhs9", applicationContext)
+//        val client = ChatClient.Builder(getString(R.string.api_key), applicationContext)
 //            .withPlugins(offlinePluginFactory, statePluginFactory)
 //            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
 //            .build()
 
+        // eto ung sample api key from https://getstream.io/tutorials/android-chat/
+        // uncomment this and icomment ung nasa taas para matest nyo
+        val client = ChatClient.Builder("uun7ywwamhs9", applicationContext)
+            .withPlugins(offlinePluginFactory, statePluginFactory)
+            .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
+            .build()
+
         // 3 - Authenticate and connect the user
         val user = User(
-            id = "xXxj34n0g3nu1n0xXx",
-            name = "Jeano Genuino",
+            id = "tutorial-droid",
+            name = "Tutorial Droid",
             image = "https://bit.ly/2TIt8NR"
         )
         client.connectUser(
