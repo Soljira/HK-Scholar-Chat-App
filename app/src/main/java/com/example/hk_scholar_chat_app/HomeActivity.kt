@@ -30,6 +30,7 @@ import io.getstream.chat.android.state.plugin.config.StatePluginConfig
 import io.getstream.chat.android.state.plugin.factory.StreamStatePluginFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.util.UUID
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,37 +72,7 @@ class HomeActivity : ComponentActivity() {
              * CODE FROM https://getstream.io/chat/docs/android/?language=kotlin#channels
              */
             if (result.isSuccess) {
-                // Create and watch channel after successful connection
-                val channelClient = client.channel(channelType = "messaging", channelId = "travel")
-                val extraData = mutableMapOf(
-                    "name" to "Awesome channel about traveling"
-                )
-
-                // Creating a channel with the low level client
-                channelClient.create(memberIds = emptyList(), extraData = extraData).enqueue { channelResult ->
-                    if (channelResult.isSuccess) {
-                        val channel: Channel = channelResult.getOrThrow()
-                        // Use channel by calling methods on channelClient
-
-                        // Set up watching the channel's state
-                        val scope = CoroutineScope(Dispatchers.Main)
-                        scope.launch {
-                            client.watchChannelAsState(cid = "messaging:travel", messageLimit = 0).collect { channelState ->
-                                if (channelState != null) {
-                                    // StateFlow objects to observe
-                                    channelState.messages
-                                    channelState.reads
-                                    channelState.typing
-                                } else {
-                                    // User not connected yet.
-                                }
-                            }
-                        }
-                    } else {
-                        // Handle channelResult.error()
-                        println("Failed to create channel: ${channelResult.getOrThrow() ?: "Unknown error"}")
-                    }
-                }
+                // TODO: Handle success LATER NA TO
             } else {
                 // TODO: Handle error LATER NA TO
                 println("Failed to connect user: ${result.getOrThrow() ?: "Unknown error"}")
@@ -122,6 +93,22 @@ class HomeActivity : ComponentActivity() {
                                 },
                                 onHeaderActionClick = {
                                     println("Header Action Click")
+                                    // Create a new channel when header action is clicked
+                                    val randomId = UUID.randomUUID().toString().substring(0, 8)
+                                    val channelClient = client.channel(channelType = "messaging", channelId = randomId)
+                                    val extraData = mutableMapOf(
+                                        "name" to "New Channel ${randomId}"
+                                    )
+
+                                    channelClient.create(memberIds = emptyList(), extraData = extraData).enqueue { channelResult ->
+                                        if (channelResult.isSuccess) {
+                                            val channel: Channel = channelResult.getOrThrow()
+                                            println("Successfully created channel: ${channel.cid}")
+                                            // startActivity(ChannelActivity.getIntent(this, channel.cid))
+                                        } else {
+                                            println("Failed to create channel: ${channelResult.errorOrNull()?.message ?: "Unknown error"}")
+                                        }
+                                    }
                                 },
                                 onBackPressed = { finish() }
                             )
