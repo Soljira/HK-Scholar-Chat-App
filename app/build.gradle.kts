@@ -90,4 +90,8 @@ dependencies {
 //    implementation(libs.stream.chat.android.compose)
     implementation("io.getstream:stream-chat-android-offline:6.12.0")
     implementation("io.getstream:stream-chat-android-compose:6.12.0")
+
+    /* Gemini SDK stuff */
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
 }
